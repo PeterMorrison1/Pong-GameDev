@@ -18,10 +18,19 @@ pygame.display.set_caption('Pong')
 light_grey = (200, 200, 200)
 bg_color = pygame.Color('grey12')
 
-# Game Rectangles
-ball = pygame.Rect(screen_width / 2 - 15, screen_height / 2 - 15, 30, 30)
-player = pygame.Rect(screen_width - 20, screen_height / 2 - 70, 10, 140)
-opponent = pygame.Rect(10, screen_height / 2 - 70, 10, 140)
+# Ball Image
+ball_image = pygame.image.load("images/corona.png")
+ball_image = pygame.transform.scale(ball_image, (125,75))
+ball = ball_image.get_rect(center=(screen_width / 2 -15, screen_height / 2 - 15))
+
+# Opponent Paddle
+paddle_image = pygame.image.load("images/mask.png")
+paddle_image = pygame.transform.scale(paddle_image, (150,150))
+left_image = pygame.transform.flip(paddle_image, True, False)
+opponent = left_image.get_rect(center=(50, screen_height / 2 - 70)) # creates rectangle, same size as image
+
+# Player Paddle
+player = paddle_image.get_rect(center=(screen_width - 50, screen_height / 2 - 70)) # creates rectangle, same size as image
 
 # Game Variables
 ball_speed_x = 7 * random.choice((1, -1))
@@ -38,6 +47,37 @@ basic_font = pygame.font.Font('freesansbold.ttf', 32)
 pong_sound = pygame.mixer.Sound("./media/pong.ogg")
 score_sound = pygame.mixer.Sound("./media/score.ogg")
 
+# Background Pictures
+party = pygame.image.load("images/party.jpg").convert()
+party = pygame.transform.scale(party, (screen_width,screen_height))
+
+emergency = pygame.image.load("images/emergency.jpg").convert()
+emergency = pygame.transform.scale(emergency, (screen_width,screen_height))
+
+hospital = pygame.image.load("images/hospital.jpg").convert()
+hospital = pygame.transform.scale(hospital, (screen_width,screen_height))
+
+flatline = pygame.image.load("images/flatline.png").convert()
+flatline = pygame.transform.scale(flatline, (screen_width,screen_height))
+
+def display_background():
+	global player_score, opponent_score
+
+    # so function doesn't account for lower score when it hits a milestone
+	if player_score > opponent_score:
+		greater_score = player_score
+	else:
+		greater_score = opponent_score
+
+    # milestone at scores 0, 5, 10, 15
+	if greater_score == 15:
+		screen.blit(flatline, [0,0])		
+	if 10 <= greater_score < 15:
+		screen.blit(hospital, [0,0])
+	if 5 <= greater_score < 10:
+		screen.blit(emergency, [0,0])
+	if greater_score < 5:
+		screen.blit(party, [0,0])
 
 def ball_animation():
     global ball_speed_x, ball_speed_y, player_score, opponent_score
@@ -149,9 +189,10 @@ if __name__ == "__main__":
 
             # Visuals
             screen.fill(bg_color)
-            pygame.draw.rect(screen, light_grey, player)
-            pygame.draw.rect(screen, light_grey, opponent)
-            pygame.draw.ellipse(screen, light_grey, ball)
+            display_background()
+            screen.blit(paddle_image, player)
+            screen.blit(left_image, opponent)
+            screen.blit(ball_image, ball)
             pygame.draw.aaline(screen, light_grey, (screen_width / 2,
                                                     0), (screen_width / 2, screen_height))
 
