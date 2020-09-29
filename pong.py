@@ -37,6 +37,7 @@ basic_font = pygame.font.Font('freesansbold.ttf', 32)
 # Sound Effects
 pong_sound = pygame.mixer.Sound("./media/coughing_cut.ogg")
 score_sound = pygame.mixer.Sound("./media/Pokemon_cut_2.ogg")
+main_screen_sound = pygame.mixer.Sound("./media/Mario_Theme.ogg")
 
 
 def ball_animation():
@@ -114,6 +115,11 @@ class State(Enum):
 if __name__ == "__main__":
     # This sets the starting state to the main menu
     state = State.menu
+    
+    #Stops any audio that are playing and plays the main screen music
+    pygame.mixer.stop()
+    pygame.mixer.Sound.play(main_screen_sound)
+        
     while True:
         
         # this is our state machine, we have one for the states in class State(Enum)
@@ -125,6 +131,7 @@ if __name__ == "__main__":
             screen.blit(test_text, (660, 470))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    pygame.mixer.stop()
                     pygame.quit()
                     sys.exit()
                 # Check for any user input
@@ -133,6 +140,7 @@ if __name__ == "__main__":
         elif state is State.play:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    pygame.mixer.stop()
                     pygame.quit()
                     sys.exit()
 
