@@ -35,8 +35,8 @@ opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Sound Effects
-pong_sound = pygame.mixer.Sound("./media/pong.ogg")
-score_sound = pygame.mixer.Sound("./media/score.ogg")
+pong_sound = pygame.mixer.Sound("./media/coughing_cut.ogg")
+score_sound = pygame.mixer.Sound("./media/Pokemon_cut_2.ogg")
 
 
 def ball_animation():
@@ -53,8 +53,8 @@ def ball_animation():
 
     # Player Scores
     if ball.left <= 0:
-        pygame.mixer.Sound.play(score_sound)
         pygame.mixer.stop()
+        pygame.mixer.Sound.play(score_sound)
         player_score += 1
         ball_restart()
 
