@@ -1,10 +1,12 @@
 import pygame
 import sys
+import os
 import random
 from enum import Enum
 
 # Pygame Setup
 pygame.mixer.pre_init(44100, -16, 2, 512)
+os.environ['SDL_VIDEO_WINDOW_POS'] = "50,50"
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -119,23 +121,41 @@ if __name__ == "__main__":
     #Stops any audio that are playing and plays the main screen music
     pygame.mixer.stop()
     pygame.mixer.Sound.play(main_screen_sound)
+    name = ""
+    entering_name = False
         
     while True:
         
         # this is our state machine, we have one for the states in class State(Enum)
         if state is State.menu:
             # Creating the surface for text
-            test_text = basic_font.render(
-                f'Press any key to start playing - will change later', False, light_grey)
+            title_text = basic_font.render(f'COVID-19 Pong', False, light_grey)
+            start_text = basic_font.render(f'Press any key to start playing', False, light_grey)
 
-            screen.blit(test_text, (660, 470))
+            screen.blit(title_text, (300, 200))
+            screen.blit(start_text, (300, 470))
+
+            # Updates the name input every frame
+            if entering_name is True:
+                name_text = basic_font.render(f'Name: {name}', False, light_grey)
+                prompt_text = basic_font.render(f'Type your name, press enter when done', False, light_grey)
+                screen.blit(prompt_text, (300, 525))
+                screen.blit(name_text, (300, 575))
+                
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 # Check for any user input
                 if event.type == pygame.KEYDOWN:
-                    state = State.play
+                    entering_name = True
+                    print(event)
+                    if event.key == pygame.K_RETURN:
+                        entering_name = False
+                        state = State.play
+                    else:
+                        name = name + str(event.unicode)
+
         elif state is State.play:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
