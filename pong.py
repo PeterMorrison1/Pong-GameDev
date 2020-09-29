@@ -9,8 +9,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Game Window
-screen_width = 1280
-screen_height = 960
+screen_width = 1100
+screen_height = 550
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')
 
@@ -20,12 +20,12 @@ bg_color = pygame.Color('grey12')
 
 # Ball Image
 ball_image = pygame.image.load("images/corona.png")
-ball_image = pygame.transform.scale(ball_image, (125,75))
+ball_image = pygame.transform.scale(ball_image, (125,75)) # change numbers here to change size
 ball = ball_image.get_rect(center=(screen_width / 2 -15, screen_height / 2 - 15))
 
 # Opponent Paddle
 paddle_image = pygame.image.load("images/mask.png")
-paddle_image = pygame.transform.scale(paddle_image, (150,150))
+paddle_image = pygame.transform.scale(paddle_image, (150,150)) # change numbers here to change size
 left_image = pygame.transform.flip(paddle_image, True, False)
 opponent = left_image.get_rect(center=(50, screen_height / 2 - 70)) # creates rectangle, same size as image
 
@@ -48,16 +48,16 @@ pong_sound = pygame.mixer.Sound("./media/pong.ogg")
 score_sound = pygame.mixer.Sound("./media/score.ogg")
 
 # Background Pictures
-party = pygame.image.load("images/party.jpg").convert()
+party = pygame.image.load("images/party.jpg")
 party = pygame.transform.scale(party, (screen_width,screen_height))
 
-emergency = pygame.image.load("images/emergency.jpg").convert()
+emergency = pygame.image.load("images/emergency.png")
 emergency = pygame.transform.scale(emergency, (screen_width,screen_height))
 
-hospital = pygame.image.load("images/hospital.jpg").convert()
+hospital = pygame.image.load("images/hospital.jpg")
 hospital = pygame.transform.scale(hospital, (screen_width,screen_height))
 
-flatline = pygame.image.load("images/flatline.png").convert()
+flatline = pygame.image.load("images/flatline.jpg")
 flatline = pygame.transform.scale(flatline, (screen_width,screen_height))
 
 def display_background():
