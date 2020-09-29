@@ -47,23 +47,27 @@ def ball_animation():
 
     # Ball Collision (Top or Bottom)
     if ball.top <= 0 or ball.bottom >= screen_height:
+		pygame.mixer.stop()
         pygame.mixer.Sound.play(pong_sound)
         ball_speed_y *= -1
 
     # Player Scores
     if ball.left <= 0:
         pygame.mixer.Sound.play(score_sound)
+		pygame.mixer.stop()
         player_score += 1
         ball_restart()
 
     # Opponent Scores
     if ball.right >= screen_width:
+		pygame.mixer.stop()
         pygame.mixer.Sound.play(score_sound)
         opponent_score += 1
         ball_restart()
 
     # Ball Collision (Player or Opponent)
     if ball.colliderect(player) or ball.colliderect(opponent):
+		pygame.mixer.stop()
         pygame.mixer.Sound.play(pong_sound)
         ball_speed_x *= -1
 
