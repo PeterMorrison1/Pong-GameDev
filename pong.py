@@ -131,7 +131,6 @@ if __name__ == "__main__":
             screen.blit(test_text, (660, 470))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.mixer.stop()
                     pygame.quit()
                     sys.exit()
                 # Check for any user input
@@ -140,10 +139,8 @@ if __name__ == "__main__":
         elif state is State.play:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.mixer.stop()
                     pygame.quit()
                     sys.exit()
-
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         player_speed -= 6
@@ -154,7 +151,7 @@ if __name__ == "__main__":
                         player_speed += 6
                     if event.key == pygame.K_DOWN:
                         player_speed -= 6
-
+            
             ball_animation()
             player_animation()
             opponent_ai()
