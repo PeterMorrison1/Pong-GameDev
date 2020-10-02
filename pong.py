@@ -165,22 +165,21 @@ if __name__ == "__main__":
     entering_name = False
         
     while True:
-        
         # this is our state machine, we have one for the states in class State(Enum)
         if state is State.menu:
             # Creating the surface for text
             title_text = basic_font.render(f'COVID-19 Pong', False, light_grey)
             start_text = basic_font.render(f'Press any key to start playing', False, light_grey)
 
-            screen.blit(title_text, (300, 200))
-            screen.blit(start_text, (300, 470))
+            screen.blit(title_text, (300, 100))
+            screen.blit(start_text, (300, 270))
 
             # Updates the name input every frame
             if entering_name is True:
                 name_text = basic_font.render(f'Name: {name}', False, light_grey)
                 prompt_text = basic_font.render(f'Type your name, press enter when done', False, light_grey)
-                screen.blit(prompt_text, (300, 525))
-                screen.blit(name_text, (300, 575))
+                screen.blit(prompt_text, (300, 425))
+                screen.blit(name_text, (300, 475))
                 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
