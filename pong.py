@@ -47,6 +47,7 @@ basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Sound Effects
 pong_sound = pygame.mixer.Sound("./media/coughing_cut2.ogg")
+wall_sound = pygame.mixer.Sound("./media/Mario-jump-cut.ogg")
 score_sound = pygame.mixer.Sound("./media/Pokemon_cut_2.ogg")
 main_screen_sound = pygame.mixer.Sound("./media/Mario_Theme.ogg")
 
@@ -91,7 +92,7 @@ def ball_animation():
     # Ball Collision (Top or Bottom)
     if ball.top <= 0 or ball.bottom >= screen_height:
         pygame.mixer.stop()
-        pygame.mixer.Sound.play(pong_sound)
+        pygame.mixer.Sound.play(wall_sound)
         ball_speed_y *= -1
 
     # Player Scores
