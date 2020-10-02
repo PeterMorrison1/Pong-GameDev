@@ -46,7 +46,7 @@ opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Sound Effects
-pong_sound = pygame.mixer.Sound("./media/coughing_cut.ogg")
+pong_sound = pygame.mixer.Sound("./media/coughing_cut2.ogg")
 score_sound = pygame.mixer.Sound("./media/Pokemon_cut_2.ogg")
 main_screen_sound = pygame.mixer.Sound("./media/Mario_Theme.ogg")
 
