@@ -33,6 +33,7 @@ opponent = left_image.get_rect(center=(50, screen_height / 2 - 70)) # creates re
 
 # Player Paddle
 player = paddle_image.get_rect(center=(screen_width - 50, screen_height / 2 - 70)) # creates rectangle, same size as image
+name = ""
 
 # Game Variables
 ball_speed_x = 7 * random.choice((1, -1))
@@ -145,7 +146,12 @@ def ball_restart():
     # start the ball in a random direction
     ball_speed_y *= random.choice((1, -1))
     ball_speed_x *= random.choice((1, -1))
-
+    
+def reset_game():
+    global player_score, opponent_score, name
+    player_score = 0
+    opponent_score = 0
+    name = ""
 
 class State(Enum):
     menu = 1
@@ -161,12 +167,14 @@ if __name__ == "__main__":
     #Stops any audio that are playing and plays the main screen music
     pygame.mixer.stop()
     pygame.mixer.Sound.play(main_screen_sound)
-    name = ""
+    
     entering_name = False
         
     while True:
         # this is our state machine, we have one for the states in class State(Enum)
         if state is State.menu:
+            screen.fill((0, 0, 0))
+            
             # Creating the surface for text
             title_text = basic_font.render(f'COVID-19 Pong', False, light_grey)
             start_text = basic_font.render(f'Press any key to start playing', False, light_grey)
@@ -188,7 +196,6 @@ if __name__ == "__main__":
                 # Check for any user input
                 if event.type == pygame.KEYDOWN:
                     entering_name = True
-                    print(event)
                     if event.key == pygame.K_RETURN:
                         entering_name = False
                         state = State.play
