@@ -56,7 +56,7 @@ main_screen_sound = pygame.mixer.Sound("./media/Mario_Theme.ogg")
 party = pygame.image.load("images/party.jpg")
 party = pygame.transform.scale(party, (screen_width,screen_height))
 
-emergency = pygame.image.load("images/emergency.png")
+emergency = pygame.image.load("images/emergency.jpg")
 emergency = pygame.transform.scale(emergency, (screen_width,screen_height))
 
 hospital = pygame.image.load("images/hospital.jpg")
