@@ -44,6 +44,7 @@ opponent_speed = 7
 player_score = 0
 opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
+big_font = pygame.font.Font('freesansbold.ttf', 50)
 
 # Sound Effects
 pong_sound = pygame.mixer.Sound("./media/coughing_cut.ogg")
@@ -146,6 +147,28 @@ def ball_restart():
     ball_speed_y *= random.choice((1, -1))
     ball_speed_x *= random.choice((1, -1))
 
+def end_screen():
+    global winner, name
+
+    opponent = basic_font.render(f'Opponent', False, light_grey)
+    player = basic_font.render(f'Player', False, light_grey)
+    opp_display_score = basic_font.render(f'{opponent_score}', False, light_grey)
+    player_display_score = basic_font.render(f'{player_score}', False, light_grey)
+    opponent_line = big_font.render(f'Oh no, you have died!', False, light_grey)
+    player_line = big_font.render(f'Congratulations, you have survived!', False, light_grey)
+    play_again = basic_font.render("Click any button to play again", False, light_grey)
+
+    if winner == "player":
+        screen.blit(player_line, (200, 450))
+    if winner == "opponent":
+        screen.blit(opponent_line, (375,450))
+
+    screen.blit(opponent, (250, 100))
+    screen.blit(player, (900, 100))
+    screen.blit(opp_display_score, (320, 200))
+    screen.blit(player_display_score, (940, 200))
+
+    screen.blit(play_again, (400,700))
 
 class State(Enum):
     menu = 1
@@ -163,11 +186,12 @@ if __name__ == "__main__":
     pygame.mixer.Sound.play(main_screen_sound)
     name = ""
     entering_name = False
+    winner = ""
         
     while True:
-        
         # this is our state machine, we have one for the states in class State(Enum)
         if state is State.menu:
+            screen.fill(bg_color)
             # Creating the surface for text
             title_text = basic_font.render(f'COVID-19 Pong', False, light_grey)
             start_text = basic_font.render(f'Press any key to start playing', False, light_grey)
@@ -195,6 +219,21 @@ if __name__ == "__main__":
                         state = State.play
                     else:
                         name = name + str(event.unicode)
+        
+        elif state is State.end:
+            screen.fill(bg_color)
+            end_screen()            
+            player_score = 0
+            opponent_score = 0
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                if event.type == pygame.KEYDOWN:
+                    print(event)
+                    if event.key == pygame.K_RETURN:
+                        state = State.menu
 
         elif state is State.play:
             for event in pygame.event.get():
@@ -212,6 +251,15 @@ if __name__ == "__main__":
                     if event.key == pygame.K_DOWN:
                         player_speed -= 6
             
+            if player_score == 15: 
+                state = State.end
+                winner = "player"
+                print("end")
+            if opponent_score == 15:
+                state = State.end
+                winner = "opponent"
+                print("end")
+            
             ball_animation()
             player_animation()
             opponent_ai()
@@ -222,8 +270,7 @@ if __name__ == "__main__":
             screen.blit(paddle_image, player)
             screen.blit(left_image, opponent)
             screen.blit(ball_image, ball)
-            pygame.draw.aaline(screen, light_grey, (screen_width / 2,
-                                                    0), (screen_width / 2, screen_height))
+            pygame.draw.aaline(screen, light_grey, (screen_width / 2, 0), (screen_width / 2, screen_height))
 
             # Creating the surface for text
             player_text = basic_font.render(
