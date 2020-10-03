@@ -256,6 +256,7 @@ if __name__ == "__main__":
                     if event.key == pygame.K_RETURN:
                         state = State.menu
         
+        # On enter pressed, pause game
         elif state is State.pause:
             screen.fill(bg_color)
 
@@ -267,7 +268,7 @@ if __name__ == "__main__":
                     pygame.quit()
                     sys.exit()
                 
-                if event.type == pygame.KEYDOWN: # To start new game
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         state = State.play
 
