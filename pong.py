@@ -54,6 +54,9 @@ pong_sound = pygame.mixer.Sound("./media/coughing_cut2.ogg")
 wall_sound = pygame.mixer.Sound("./media/Mario-jump-cut.ogg")
 score_sound = pygame.mixer.Sound("./media/Pokemon_cut_2.ogg")
 main_screen_sound = pygame.mixer.Sound("./media/Mario_Theme.ogg")
+losing_sound = pygame.mixer.Sound("./media/flatline_cut2.ogg")
+winning_sound = pygame.mixer.Sound("./media/mario_ending.ogg")
+music_playing = False
 
 # Background Pictures
 party = pygame.image.load("images/party.jpg")
@@ -162,7 +165,7 @@ def reset_game():
     name = ""
 
 def end_screen():
-    global winner, name
+    global winner, name, music_playing
 
     #Score Display 
     opponent = basic_font.render(f'Opponent', False, light_grey)
@@ -178,8 +181,14 @@ def end_screen():
 
     # Display winning or losing line
     if winner == "player": 
+        if music_playing == False:
+            pygame.mixer.Sound.play(winning_sound)
+            music_playing = True
         screen.blit(player_line, (200, 450))
     if winner == "opponent":
+        if music_playing == False:
+            pygame.mixer.Sound.play(losing_sound)
+            music_playing = True
         screen.blit(opponent_line, (375,450))
 
     # Display Scores 
@@ -201,18 +210,17 @@ class State(Enum):
 if __name__ == "__main__":
     # This sets the starting state to the main menu
     state = State.menu
-    music_playing = False
     entering_name = False
-    
+
     while True:
         # this is our state machine, we have one for the states in class State(Enum)
         if state is State.menu:
             screen.fill(bg_color)
-            
+
             if music_playing is False:
                 pygame.mixer.Sound.play(main_screen_sound)
                 music_playing = True
-        
+            
             # Resets scores & name   
             player_score = 0
             opponent_score = 0
@@ -241,6 +249,9 @@ if __name__ == "__main__":
                     if event.key == pygame.K_RETURN:
                         entering_name = False
                         state = State.play
+                        
+                        #Stops the main screen music when the game begins to play
+                        pygame.mixer.stop()
                     else:
                         name = name + str(event.unicode)
         
@@ -259,6 +270,10 @@ if __name__ == "__main__":
                     print(event)
                     if event.key == pygame.K_RETURN:
                         state = State.menu
+
+                        #Resets the variable music_playing to false and stops the music from playing
+                        music_playing = False
+                        pygame.mixer.stop()
         
         # On enter pressed, pause game
         elif state is State.pause:
@@ -277,6 +292,7 @@ if __name__ == "__main__":
                         state = State.play
 
         elif state is State.play:
+            
             music_playing = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
