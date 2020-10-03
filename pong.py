@@ -11,8 +11,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Game Window
-screen_width = 1280
-screen_height = 960
+screen_width = 1100
+screen_height =600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')
 
@@ -115,6 +115,10 @@ def ball_animation():
         pygame.mixer.stop()
         pygame.mixer.Sound.play(pong_sound)
         ball_speed_x *= -1
+        if ball.x >= 900:
+            ball.x = ball.x - 20
+        if ball.x <= 200:
+            ball.x = ball.x + 20
 
 
 def player_animation():
@@ -229,6 +233,7 @@ if __name__ == "__main__":
             screen.blit(paddle_image, player)
             screen.blit(left_image, opponent)
             screen.blit(ball_image, ball)
+
             pygame.draw.aaline(screen, light_grey, (screen_width / 2,
                                                     0), (screen_width / 2, screen_height))
 
