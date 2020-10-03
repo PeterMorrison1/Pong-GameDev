@@ -118,6 +118,10 @@ def ball_animation():
         pygame.mixer.stop()
         pygame.mixer.Sound.play(pong_sound)
         ball_speed_x *= -1
+        if ball.x >= 900:
+            ball.x = ball.x - 20
+        if ball.x <= 200:
+            ball.x = ball.x + 20
 
 
 def player_animation():
@@ -311,6 +315,7 @@ if __name__ == "__main__":
             screen.blit(paddle_image, player)
             screen.blit(left_image, opponent)
             screen.blit(ball_image, ball)
+
             pygame.draw.aaline(screen, light_grey, (screen_width / 2,
                                                     0), (screen_width / 2, screen_height))
 
