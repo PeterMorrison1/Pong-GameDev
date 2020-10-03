@@ -44,7 +44,10 @@ opponent_speed = 7
 # Score Text
 player_score = 0
 opponent_score = 0
+
+# Font Variables
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
+big_font = pygame.font.Font('freesansbold.ttf', 50)
 
 # Sound Effects
 pong_sound = pygame.mixer.Sound("./media/coughing_cut2.ogg")
@@ -158,6 +161,36 @@ def reset_game():
     opponent_score = 0
     name = ""
 
+def end_screen():
+    global winner, name
+
+    #Score Display 
+    opponent = basic_font.render(f'Opponent', False, light_grey)
+    player = basic_font.render(f'Player', False, light_grey)
+    opp_display_score = basic_font.render(f'{opponent_score}', False, light_grey)
+    player_display_score = basic_font.render(f'{player_score}', False, light_grey)
+
+    # Winning/Losing Line 
+    opponent_line = big_font.render(f'Oh no, you have died!', False, light_grey)
+    player_line = big_font.render(f'Congratulations, you have survived!', False, light_grey)
+
+    play_again = basic_font.render("Click any button to play again", False, light_grey)
+
+    # Display winning or losing line
+    if winner == "player": 
+        screen.blit(player_line, (200, 450))
+    if winner == "opponent":
+        screen.blit(opponent_line, (375,450))
+
+    # Display Scores 
+    screen.blit(opponent, (250, 100))
+    screen.blit(player, (900, 100))
+    screen.blit(opp_display_score, (320, 200))
+    screen.blit(player_display_score, (940, 200))
+
+    screen.blit(play_again, (400,700))
+
+
 class State(Enum):
     menu = 1
     play = 2
@@ -179,6 +212,10 @@ if __name__ == "__main__":
         # this is our state machine, we have one for the states in class State(Enum)
         if state is State.menu:
             screen.fill((0, 0, 0))
+        
+            # Resets scores & name   
+            player_score = 0
+            opponent_score = 0
             
             # Creating the surface for text
             title_text = basic_font.render(f'COVID-19 Pong', False, light_grey)
@@ -206,6 +243,22 @@ if __name__ == "__main__":
                         state = State.play
                     else:
                         name = name + str(event.unicode)
+        
+        elif state is State.end:
+            screen.fill(bg_color)
+            name = ""
+            #End screen function 
+            end_screen()         
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                
+                if event.type == pygame.KEYDOWN: # To start new game
+                    print(event)
+                    if event.key == pygame.K_RETURN:
+                        state = State.menu
 
         elif state is State.play:
             for event in pygame.event.get():
@@ -226,6 +279,16 @@ if __name__ == "__main__":
             ball_animation()
             player_animation()
             opponent_ai()
+
+            # End Score
+            if player_score == 15: 
+                state = State.end
+                winner = "player"
+                print("end")
+            if opponent_score == 15:
+                state = State.end
+                winner = "opponent"
+                print("end")
 
             # Visuals
             screen.fill(bg_color)
