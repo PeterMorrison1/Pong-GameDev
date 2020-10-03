@@ -255,6 +255,21 @@ if __name__ == "__main__":
                     print(event)
                     if event.key == pygame.K_RETURN:
                         state = State.menu
+        
+        elif state is State.pause:
+            screen.fill(bg_color)
+
+            pause_text = basic_font.render(f'Press Enter to Resume', False, light_grey)
+            screen.blit(pause_text, (300, 475))
+                
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                
+                if event.type == pygame.KEYDOWN: # To start new game
+                    if event.key == pygame.K_RETURN:
+                        state = State.play
 
         elif state is State.play:
             music_playing = False
@@ -267,6 +282,8 @@ if __name__ == "__main__":
                         player_speed -= 6
                     if event.key == pygame.K_DOWN:
                         player_speed += 6
+                    if event.key == pygame.K_RETURN:
+                        state = State.pause
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP:
                         player_speed += 6
