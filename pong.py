@@ -11,8 +11,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Game Window
-screen_width = 1100
-screen_height =600
+screen_width = 1280
+screen_height = 960
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')
 
