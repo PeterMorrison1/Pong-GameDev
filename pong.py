@@ -197,17 +197,17 @@ class State(Enum):
 if __name__ == "__main__":
     # This sets the starting state to the main menu
     state = State.menu
-    
-    #Stops any audio that are playing and plays the main screen music
-    pygame.mixer.stop()
-    pygame.mixer.Sound.play(main_screen_sound)
-    
+    music_playing = False
     entering_name = False
-        
+    
     while True:
         # this is our state machine, we have one for the states in class State(Enum)
         if state is State.menu:
-            screen.fill((0, 0, 0))
+            screen.fill(bg_color)
+            
+            if music_playing is False:
+                pygame.mixer.Sound.play(main_screen_sound)
+                music_playing = True
         
             # Resets scores & name   
             player_score = 0
@@ -257,6 +257,7 @@ if __name__ == "__main__":
                         state = State.menu
 
         elif state is State.play:
+            music_playing = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
