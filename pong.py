@@ -165,15 +165,6 @@ def ball2_restart():
     ball2_speed_y *= random.choice((1, -1))
     ball2_speed_x *= random.choice((1, -1))
 
-def scoreLevels():
-    global player_score, opponent_score, ball_speed_x, ball_speed_y
-
-    if opponent_score == 5 or player_score == 5: #ball speed x 1.5 when it hits the first milestone
-        ball_speed_x = 10.5
-        ball_speed_y = 10.5
-    if opponent_score >= 10 or player_score >= 10:
-        x = basic_font.render(f'Score is 10', False, light_grey)
-        screen.blit(x, (20, 30))
 
 # SECOND BALL AT 10 POINTS
 def secondBall_animation():
@@ -272,10 +263,9 @@ if __name__ == "__main__":
                     if event.key == pygame.K_DOWN:
                         player_speed -= 6
             
-            #ball_animation()
             player_animation()
             opponent_ai()
-            #scoreLevels()
+            scoreLevels()
 
             # Visuals
             screen.fill(bg_color)
@@ -295,17 +285,18 @@ if __name__ == "__main__":
                 f'{opponent_score}', False, light_grey)
             screen.blit(opponent_text, (600, 470))
             
-            #Show speed and increase speed
+             #Show event text at top left screen
             if greater_score >= 5 and greater_score < 10: 
-                milestoneText = basic_font.render(f'FASTER! {ball_speed_x} {ball_speed_y}', False, light_grey)
+                milestoneText = basic_font.render(f'FASTER!', False, light_grey)
                 screen.blit(milestoneText, (20, 10))
-            elif greater_score >= 10 and greterscore < 15:
+            elif greater_score >= 10 and greater_score < 15:
                 milestoneText = basic_font.render(f'TWO BALLS!', False, light_grey)
                 screen.blit(milestoneText, (20, 10))
-                
+    
+            #Score milestones
             if greater_score == 5:
-                ball_speed_x = 10 
-                ball_speed_y = 10  
+                ball_speed_x = 9 
+                ball_speed_y = 9  
             if greater_score >= 10 and greater_score < 15:
                 screen.blit(ball2_image, ball2)
                 secondBall_animation()
