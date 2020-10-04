@@ -272,7 +272,7 @@ if __name__ == "__main__":
                     if event.key == pygame.K_DOWN:
                         player_speed -= 6
             
-            ball_animation()
+            #ball_animation()
             player_animation()
             opponent_ai()
             #scoreLevels()
@@ -296,19 +296,21 @@ if __name__ == "__main__":
             screen.blit(opponent_text, (600, 470))
             
             #Show speed and increase speed
-            if greater_score >= 5: 
-                ballSpeed = basic_font.render(f'FASTER! {ball_speed_x} {ball_speed_y}', False, light_grey)
-                screen.blit(ballSpeed, (20, 10))
-            if greater_score ==5 :
-                ball_speed_x = 9
-                ball_speed_y = 9
-                ball_animation()
-            elif greater_score >= 10 and greater_score < 15:
-                ballSpeed = basic_font.render(f'TWO BALLS!', False, light_grey)
-                screen.blit(ballSpeed, (20, 10))
+            if greater_score >= 5 and greater_score < 10: 
+                milestoneText = basic_font.render(f'FASTER! {ball_speed_x} {ball_speed_y}', False, light_grey)
+                screen.blit(milestoneText, (20, 10))
+            elif greater_score >= 10 and greterscore < 15:
+                milestoneText = basic_font.render(f'TWO BALLS!', False, light_grey)
+                screen.blit(milestoneText, (20, 10))
+                
+            if greater_score == 5:
+                ball_speed_x = 10 
+                ball_speed_y = 10  
+            if greater_score >= 10 and greater_score < 15:
                 screen.blit(ball2_image, ball2)
                 secondBall_animation()
 
+            ball_animation()
         # Loop Timer
         pygame.display.flip()
         clock.tick(60)
