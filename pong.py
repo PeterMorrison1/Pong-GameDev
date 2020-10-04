@@ -18,7 +18,9 @@ pygame.display.set_caption('Pong')
 
 # Colors
 light_grey = (200, 200, 200)
+red = (102, 0, 0)
 bg_color = pygame.Color('grey12')
+
 
 # Ball Image
 ball_image = pygame.image.load("images/corona.png")
@@ -46,8 +48,8 @@ ball_speed_y = 7 * random.choice((1, -1))
 player_speed = 0
 opponent_speed = 7
 #BALL 2
-ball2_speed_x = 7 * random.choice((1, -1))
-ball2_speed_y = 7 * random.choice((1, -1))
+ball2_speed_x = 5 * random.choice((1, -1))
+ball2_speed_y = 5 * random.choice((1, -1))
 
 # Score Text
 player_score = 0
@@ -363,7 +365,7 @@ if __name__ == "__main__":
             
             player_animation()
             opponent_ai()
-            scoreLevels()
+            
 
             # End Score
             if player_score == 15: 
@@ -396,11 +398,11 @@ if __name__ == "__main__":
             
              #Show event text at top left screen
             if greater_score >= 5 and greater_score < 10: 
-                milestoneText = basic_font.render(f'FASTER!', False, light_grey)
-                screen.blit(milestoneText, (20, 10))
+                milestoneText = basic_font.render(f'FASTER!', False, red)
+                screen.blit(milestoneText, (10, 15))
             elif greater_score >= 10 and greater_score < 15:
-                milestoneText = basic_font.render(f'TWO BALLS!', False, light_grey)
-                screen.blit(milestoneText, (20, 10))
+                milestoneText = basic_font.render(f'DOUBLE THE DANGER', False, red)
+                screen.blit(milestoneText, (10, 15))
     
             #Score milestones
             if greater_score == 5:
