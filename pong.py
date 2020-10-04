@@ -39,22 +39,20 @@ opponent = left_image.get_rect(center=(50, screen_height / 2 - 70)) # creates re
 # Player Paddle
 player = paddle_image.get_rect(center=(screen_width - 50, screen_height / 2 - 70)) # creates rectangle, same size as image
 
-# Score Text
-player_score = 0
-opponent_score = 0
-greater_score = 0
-basic_font = pygame.font.Font('freesansbold.ttf', 32)
-
 # Game Variables
-ball_speed_x = 7 
-ball_speed_y = 7
-ball_speed_x_multiplied = ball_speed_x * random.choice((1, -1))
-ball_speed_y_multiplied = ball_speed_y * random.choice((1, -1))
+ball_speed_x = 7 * random.choice((1, -1))
+ball_speed_y = 7 * random.choice((1, -1))
 player_speed = 0
 opponent_speed = 7
 #BALL 2
 ball2_speed_x = 7 * random.choice((1, -1))
 ball2_speed_y = 7 * random.choice((1, -1))
+
+# Score Text
+player_score = 0
+opponent_score = 0
+greater_score = 0
+basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Sound Effects
 pong_sound = pygame.mixer.Sound("./media/coughing_cut.ogg")
@@ -94,17 +92,16 @@ def display_background():
 		screen.blit(party, [0,0])
 
 def ball_animation():
-    global ball_speed_x_multiplied, ball_speed_y_multiplied, player_score, opponent_score
+    global ball_speed_x, ball_speed_y, player_score, opponent_score
 
-
-    ball.x += ball_speed_x_multiplied
-    ball.y += ball_speed_y_multiplied
+    ball.x += ball_speed_x
+    ball.y += ball_speed_y
 
     # Ball Collision (Top or Bottom)
     if ball.top <= 0 or ball.bottom >= screen_height:
         pygame.mixer.stop()
         pygame.mixer.Sound.play(pong_sound)
-        ball_speed_y_multiplied *= -1
+        ball_speed_y *= -1
 
     # Player Scores
     if ball.left <= 0:
@@ -124,7 +121,7 @@ def ball_animation():
     if ball.colliderect(player) or ball.colliderect(opponent):
         pygame.mixer.stop()
         pygame.mixer.Sound.play(pong_sound)
-        ball_speed_x_multiplied *= -1
+        ball_speed_x *= -1
 
 
 def player_animation():
@@ -149,14 +146,14 @@ def opponent_ai():
 
 
 def ball_restart():
-    global ball_speed_x_multiplied, ball_speed_y_multiplied
+    global ball_speed_x, ball_speed_y
 
     # move ball to the center
     ball.center = (screen_width/2, screen_height/2)
 
     # start the ball in a random direction
-    ball_speed_y_multiplied *= random.choice((1, -1))
-    ball_speed_x_multiplied *= random.choice((1, -1))
+    ball_speed_y *= random.choice((1, -1))
+    ball_speed_x *= random.choice((1, -1))
 
 def ball2_restart():
     global ball2_speed_x, ball2_speed_y
@@ -169,12 +166,14 @@ def ball2_restart():
     ball2_speed_x *= random.choice((1, -1))
 
 def scoreLevels():
-    global  ball_speed_x, ball_speed_y, greater_score
+    global player_score, opponent_score, ball_speed_x, ball_speed_y
 
-    if greater_score >=5:
-        ball_speed_x_multiplied = 10.5 
-        ball_speed_y_multiplied = 10.5 
-
+    if opponent_score == 5 or player_score == 5: #ball speed x 1.5 when it hits the first milestone
+        ball_speed_x = 10.5
+        ball_speed_y = 10.5
+    if opponent_score >= 10 or player_score >= 10:
+        x = basic_font.render(f'Score is 10', False, light_grey)
+        screen.blit(x, (20, 30))
 
 # SECOND BALL AT 10 POINTS
 def secondBall_animation():
@@ -272,12 +271,11 @@ if __name__ == "__main__":
                         player_speed += 6
                     if event.key == pygame.K_DOWN:
                         player_speed -= 6
-
-            scoreLevels()
+            
             ball_animation()
             player_animation()
             opponent_ai()
-            
+            #scoreLevels()
 
             # Visuals
             screen.fill(bg_color)
@@ -296,25 +294,20 @@ if __name__ == "__main__":
             opponent_text = basic_font.render(
                 f'{opponent_score}', False, light_grey)
             screen.blit(opponent_text, (600, 470))
-
-            speedX = basic_font.render(f'ballSpeedX multiplied {ball_speed_x_multiplied} ballSpeedY multiplied{ball_speed_y_multiplied} ', False, light_grey)
-            screen.blit(speedX, (60, 60))
-
-            speedY = basic_font.render(f'ballSpeedX  {ball_speed_x} ballSpeedY {ball_speed_y} ', False, light_grey)
-            screen.blit(speedY, (60, 100))
-            #Show speed
-            if greater_score >=5 :
-                #10.5
-                
-                levelText = basic_font.render(f'FASTER! {ball_speed_x} {ball_speed_y}', False, light_grey)
-                screen.blit(levelText, (20, 10))
+            
+            #Show speed and increase speed
+            if greater_score >= 5: 
+                ballSpeed = basic_font.render(f'FASTER! {ball_speed_x} {ball_speed_y}', False, light_grey)
+                screen.blit(ballSpeed, (20, 10))
+            if greater_score ==5 :
+                ball_speed_x = 9
+                ball_speed_y = 9
+                ball_animation()
             elif greater_score >= 10 and greater_score < 15:
-                levelText = basic_font.render(f'TWO BALLS!', False, light_grey)
-                screen.blit(levelText, (20, 10))
+                ballSpeed = basic_font.render(f'TWO BALLS!', False, light_grey)
+                screen.blit(ballSpeed, (20, 10))
                 screen.blit(ball2_image, ball2)
-                ball_animation
                 secondBall_animation()
-
 
         # Loop Timer
         pygame.display.flip()
