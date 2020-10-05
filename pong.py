@@ -45,6 +45,8 @@ name = ""
 # Game Variables
 ball_speed_x = 7 * random.choice((1, -1))
 ball_speed_y = 7 * random.choice((1, -1))
+ball_speed_faster_x = 9 * random.choice((1, -1))
+ball_speed_faster_y = 9 * random.choice((1, -1))
 player_speed = 0
 opponent_speed = 7
 #BALL 2
@@ -100,16 +102,21 @@ def display_background():
 		screen.blit(party, [0,0])
 
 def ball_animation():
-    global ball_speed_x, ball_speed_y, player_score, opponent_score
-
-    ball.x += ball_speed_x
-    ball.y += ball_speed_y
+    global ball_speed_x, ball_speed_y, player_score, opponent_score, greater_score, ball_speed_faster_x, ball_speed_faster_y
+    
+    if greater_score >= 5 and greater_score < 10: 
+        ball.x += ball_speed_faster_x
+        ball.y += ball_speed_faster_y
+    else: 
+        ball.x += ball_speed_x
+        ball.y += ball_speed_y
 
     # Ball Collision (Top or Bottom)
     if ball.top <= 0 or ball.bottom >= screen_height:
         pygame.mixer.stop()
         pygame.mixer.Sound.play(wall_sound)
         ball_speed_y *= -1
+        ball_speed_faster_y *= -1
 
     # Player Scores
     if ball.left <= 0:
@@ -130,6 +137,7 @@ def ball_animation():
         pygame.mixer.stop()
         pygame.mixer.Sound.play(pong_sound)
         ball_speed_x *= -1
+        ball_speed_faster_x *= -1
         if ball.x >= 900:
             ball.x = ball.x - 20
         if ball.x <= 200:
@@ -405,9 +413,6 @@ if __name__ == "__main__":
                 screen.blit(milestoneText, (10, 15))
     
             #Score milestones
-            if greater_score == 5:
-                ball_speed_x = 9 
-                ball_speed_y = 9  
             if greater_score >= 10 and greater_score < 15:
                 screen.blit(ball2_image, ball2)
                 secondBall_animation()
