@@ -12,7 +12,7 @@ The main menu mod improves gameplay by providing users with time to see what the
 
 
 ## Visuals
-
+Visual modifications, such as to the paddles, ball, and changing backgrounds, give the game a more coherent theme. It makes it more than just a basic game of pong, with gray objects across the screen. Bright visuals make the gameplay more enjoyable and immersive.
 
 ## Audio
 The audio modification improves gameplay by providing the users with sound effects while playing the game. It also allows them to indulge in their childhood memory along with references to current events in the world.
