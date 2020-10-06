@@ -15,7 +15,7 @@ The main menu mod improves gameplay by providing users with time to see what the
 
 
 ## Audio
-
+The audio modification improves gameplay by providing the users with sound effects while playing the game. It also allows them to indulge in their childhood memory along with references to current events in the world.
 
 # Attribution
 Original Pong code by Ryan Kazmerik
