@@ -6,7 +6,7 @@
 The main menu mod improves gameplay by providing users with time to see what the title is, choose when to start the game (rather than the game instantly starting), and allows the user to enter their name for personalization.
 
 ## End Screen
-
+The end screen modification provices users with an end point to the game, once reaching a certain score. The end screen provides users with the final score count, game message and allows the user to restart the game. 
 
 ## Random Barriers Spawning
 
