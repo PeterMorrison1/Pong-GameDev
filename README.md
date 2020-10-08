@@ -8,8 +8,8 @@ The main menu mod improves gameplay by providing users with time to see what the
 ## End Screen
 The end screen modification provices users with an end point to the game, once reaching a certain score. The end screen provides users with the final score count, game message and allows the user to restart the game. 
 
-## Random Barriers Spawning
-
+## Score Events
+When the player or the opponent reaches the score of 5, the ball will traverse faster. The next score milestone event occurs at 10 where two balls will be in play. These milestones provide the player an increased challenge that will enhance their experience when scoring the ball.
 
 ## Visuals
 Visual modifications, such as to the paddles, ball, and changing backgrounds, give the game a more coherent theme. It makes it more than just a basic game of pong, with gray objects across the screen. Bright visuals make the gameplay more enjoyable and immersive.
