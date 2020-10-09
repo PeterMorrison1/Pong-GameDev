@@ -1,6 +1,4 @@
 # COVID-19 Pong Mod
-
-# Mods
 Each groupmate made a mod for pong, the general theme was to make the player laugh through references to current events and nostalgia (from old games), as well as have fun with interesting gameplay with the score events mod. Finally two of the mods were for rounding out the game so it can have a start and end screen. More detailed descriptions are below.
 
 ## Main Menu - Peter Morrison
